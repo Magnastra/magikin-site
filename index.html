@@ -559,7 +559,9 @@ function renderProdutos(){
 
   area.innerHTML = lista.map(p => `
     <article class="product">
-      <div class="product-image">${p.emoji}</div>
+      <div class="product-image">
+  ${p.imagem ? `<img src="imagens/${p.imagem}" alt="${p.nome}">` : p.emoji || "📦"}
+</div>
       <div class="product-info">
         <span class="tag">${p.categoria}</span>
         <h3>${p.nome}</h3>
