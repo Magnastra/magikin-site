@@ -1165,34 +1165,6 @@
 
       carrinho.push(produto);
       atualizarCarrinho();
-      const img = event?.target?.closest(".product")?.querySelector(".product-image img");
-const carrinho = document.querySelector("#cartButton, .cart-button, .cart-icon, .carrinho, [class*='cart']");
-if (img && carrinho) {
-  const clone = img.cloneNode(true);
-  const r1 = img.getBoundingClientRect();
-  const r2 = carrinho.getBoundingClientRect();
-  clone.style.cssText = `
-    position: fixed;
-    left: ${r1.left}px;
-    top: ${r1.top}px;
-    width: ${r1.width}px;
-    height: ${r1.height}px;
-    object-fit: contain;
-    z-index: 99999;
-    pointer-events: none;
-    transition: all .7s cubic-bezier(.2,.8,.2,1);
-  `;
-  document.body.appendChild(clone);
-  requestAnimationFrame(() => {
-    clone.style.left = `${r2.left + r2.width / 2 - 20}px`;
-    clone.style.top = `${r2.top + r2.height / 2 - 20}px`;
-    clone.style.width = "40px";
-    clone.style.height = "40px";
-    clone.style.opacity = "0.3";
-    clone.style.transform = "scale(.4)";
-  });
-  setTimeout(() => clone.remove(), 750);
-}
 
       /*
         REGRA PEDIDA:
