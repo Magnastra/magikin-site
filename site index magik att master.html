@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Magik Ink Personalizados</title>
+
+  <style>
+    /* ============================================================
+       MAGIK INK — CORES PRINCIPAIS
+       Preto: #080808 / #111111
+       Dourado: #C9A45C / #E0BD73
+       As cores foram inspiradas diretamente na identidade da logo.
+       ============================================================ */
+
+    :root {
+      --preto: #080808;
+      --preto-2: #111111;
+      --preto-3: #181818;
+      --dourado: #c9a45c;
+      --dourado-claro: #e0bd73;
+      --texto: #f5f1e8;
+      --cinza: #a9a9a9;
+      --borda: rgba(201, 164, 92, .28);
+      --whatsapp: #25D366;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--preto);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* ============================================================
+       CABEÇALHO / HERO
+       ============================================================ */
+
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 620px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, rgba(201,164,92,.10), transparent 42%),
+        #080808;
+    }
+
+    .hero-logo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: .24;
+      filter: saturate(.85) contrast(1.08);
+      transform: scale(1.05);
+      will-change: transform, opacity;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,.56) 75%, var(--preto) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: min(1100px, 92%);
+      will-change: transform, opacity;
+    }
+
+    .hero-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(4rem, 12vw, 10.5rem);
+      letter-spacing: .06em;
+      line-height: .85;
+      color: var(--dourado-claro);
+      text-shadow: 0 10px 35px rgba(0,0,0,.7);
+      font-weight: 700;
+    }
+
+    .hero-subtitle {
+      margin-top: 22px;
+      color: #e5c88d;
+      letter-spacing: .25em;
+      font-size: clamp(.8rem, 2vw, 1.1rem);
+      text-transform: uppercase;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      z-index: 2;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--dourado-claro);
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      animation: subirDescer 1.8s infinite ease-in-out;
+    }
+
+    .scroll-hint::after {
+      content: "↓";
+      display: block;
+      text-align: center;
+      font-size: 1.4rem;
+      margin-top: 7px;
+    }
+
+    @keyframes subirDescer {
+      0%, 100% { opacity: .55; transform: translate(-50%, 0); }
+      50% { opacity: 1; transform: translate(-50%, 7px); }
+    }
+
+    /* ============================================================
+       BARRA SUPERIOR
+       ============================================================ */
+
+    .topbar {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      background: linear-gradient(to bottom, rgba(0,0,0,.88), rgba(0,0,0,.2));
+      pointer-events: none;
+    }
+
+    .topbar > * {
+      pointer-events: auto;
+    }
+
+    .menu-btn,
+    .cart-btn {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--borda);
+      background: rgba(8,8,8,.78);
+      color: var(--dourado-claro);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(8px);
+      transition: .2s;
+    }
+
+    .menu-btn:hover,
+    .cart-btn:hover {
+      border-color: var(--dourado);
+      transform: translateY(-2px);
+    }
+
+    .menu-icon {
+      width: 21px;
+      height: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .menu-icon span {
+      height: 2px;
+      background: var(--dourado-claro);
+      border-radius: 2px;
+    }
+
+    .cart-wrap {
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -3px;
+      right: -2px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 20px;
+      background: var(--dourado);
+      color: #090909;
+      font-size: 11px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+    }
+
+    /* ============================================================
+       MENU LATERAL
+       ============================================================ */
+
+    .menu-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(0,0,0,.66);
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s;
+    }
+
+    .side-menu {
+      position: fixed;
+      z-index: 151;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: min(350px, 88vw);
+      padding: 90px 28px 28px;
+      background:
+        linear-gradient(160deg, rgba(201,164,92,.08), transparent 35%),
+        #0c0c0c;
+      border-right: 1px solid var(--borda);
+      transform: translateX(-105%);
+      transition: transform .3s ease;
+      box-shadow: 20px 0 70px rgba(0,0,0,.45);
+    }
+
+    .menu-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu.open {
+      transform: translateX(0);
+    }
+
+    .menu-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: transparent;
+      border: 0;
+      color: var(--dourado-claro);
+      font-size: 28px;
+    }
+
+    .side-menu h2 {
+      color: var(--dourado-claro);
+      font-family: Georgia, serif;
+      margin-bottom: 6px;
+    }
+
+    .side-menu p {
+      color: var(--cinza);
+      font-size: .9rem;
+      margin-bottom: 26px;
+    }
+
+    .side-menu a {
+      display: block;
+      padding: 15px 0;
+      color: var(--texto);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      transition: .2s;
+    }
+
+    .side-menu a:hover {
+      color: var(--dourado-claro);
+      padding-left: 6px;
+    }
+
+    /* ============================================================
+       CONTEÚDO
+       ============================================================ */
+
+    .section {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+      padding: 90px 0;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 60px;
+    }
+
+    .eyebrow {
+      color: var(--dourado);
+      font-size: .78rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .intro h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: #f0d49a;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      color: var(--cinza);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       CATEGORIAS
+       ============================================================ */
+
+    .categories {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 4px 0 16px;
+      scrollbar-width: none;
+      margin-bottom: 38px;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--borda);
+      background: #101010;
+      color: #d9d9d9;
+      padding: 10px 16px;
+      border-radius: 999px;
+      transition: .2s;
+    }
+
+    .category-btn.active,
+    .category-btn:hover {
+      color: #090909;
+      background: var(--dourado);
+      border-color: var(--dourado);
+    }
+
+    /* ============================================================
+       PRODUTOS
+       ============================================================ */
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      background:
+        linear-gradient(145deg, rgba(201,164,92,.06), transparent 35%),
+        #111111;
+      border: 1px solid rgba(201,164,92,.18);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 55px rgba(0,0,0,.26);
+    }
+
+    .product-images {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #080808;
+      overflow: hidden;
+    }
+
+    .product-images img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: opacity .2s;
+    }
+
+    .image-arrow {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(0,0,0,.62);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .image-arrow.prev { left: 10px; }
+    .image-arrow.next { right: 10px; }
+
+    .dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(255,255,255,.5);
+      padding: 0;
+    }
+
+    .dot.active {
+      background: var(--dourado-claro);
+      transform: scale(1.25);
+    }
+
+    .product-info {
+      padding: 18px;
+    }
+
+    .product-category {
+      color: var(--dourado);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .68rem;
+      margin-bottom: 7px;
+    }
+
+    .product-name {
+      font-family: Georgia, serif;
+      color: #f1d79e;
+      font-size: 1.35rem;
+      margin-bottom: 7px;
+    }
+
+    .product-description {
+      color: #aaa;
+      font-size: .9rem;
+      line-height: 1.55;
+      min-height: 44px;
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .product-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+
+    .btn {
+      border: 1px solid var(--dourado);
+      min-height: 45px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .btn-cart {
+      background: var(--dourado);
+      color: #080808;
+    }
+
+    .btn-cart:hover {
+      background: var(--dourado-claro);
+      transform: translateY(-1px);
+    }
+
+    .btn-custom {
+      background: transparent;
+      color: var(--dourado-claro);
+    }
+
+    .btn-custom:hover {
+      background: rgba(201,164,92,.10);
+    }
+
+    /* ============================================================
+       TAMANHOS DOS PRODUTOS
+       ============================================================ */
+
+    .size-selector {
+      margin: 14px 0;
+      text-align: left;
+    }
+
+    .size-selector label {
+      display: block;
+      color: var(--dourado-claro);
+      font-size: .78rem;
+      font-weight: 700;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .size-selector select {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      background: #0b0b0b;
+      color: #f5f1e8;
+      outline: none;
+    }
+
+    .size-selector select:focus {
+      border-color: var(--dourado);
+    }
+
+    .custom-request {
+      width: min(720px, 100%);
+      margin: 22px auto 0;
+      text-align: left;
+    }
+
+    .custom-request label {
+      display: block;
+      color: var(--dourado-claro);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .custom-request textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      padding: 13px;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      background: #0b0b0b;
+      color: #f5f1e8;
+      outline: none;
+    }
+
+    .custom-request textarea:focus {
+      border-color: var(--dourado);
+    }
+
+    .custom-request .custom-size {
+      margin-top: 12px;
+      width: 100%;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      background: #0b0b0b;
+      color: #f5f1e8;
+    }
+
+    .custom-request .custom-send {
+      margin-top: 12px;
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--dourado);
+      color: #080808;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .custom-request .custom-send:hover {
+      background: var(--dourado-claro);
+    }
+
+    /* ============================================================
+       PERSONALIZAÇÃO
+       ============================================================ */
+
+    .custom-box {
+      margin-top: 70px;
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      padding: clamp(25px, 5vw, 55px);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(201,164,92,.13), transparent 30%),
+        #101010;
+      text-align: center;
+    }
+
+    .custom-box h2 {
+      color: #f0d49a;
+      font-family: Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 12px;
+    }
+
+    .custom-box p {
+      color: var(--cinza);
+      line-height: 1.7;
+      max-width: 650px;
+      margin: 0 auto 22px;
+    }
+
+    .custom-big-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--dourado);
+      color: #080808;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 22px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       RODAPÉ
+       ============================================================ */
+
+    footer {
+      border-top: 1px solid rgba(201,164,92,.16);
+      padding: 55px 20px 35px;
+      text-align: center;
+      background: #050505;
+    }
+
+    footer .footer-logo {
+      color: var(--dourado-claro);
+      font-family: Georgia, serif;
+      font-size: 1.8rem;
+      letter-spacing: .12em;
+      margin-bottom: 10px;
+    }
+
+    footer p {
+      color: #888;
+      margin: 6px 0;
+      font-size: .9rem;
+    }
+
+    footer a {
+      color: var(--dourado-claro);
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       WHATSAPP FLUTUANTE
+       ============================================================ */
+
+    .whatsapp-float {
+      position: fixed;
+      z-index: 120;
+      right: 18px;
+      bottom: 18px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      color: white;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(0,0,0,.45);
+      font-weight: 900;
+      font-size: 24px;
+      transition: .2s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.07);
+    }
+
+    /* ============================================================
+       CARRINHO LATERAL
+       ============================================================ */
+
+    .cart-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,.65);
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s;
+    }
+
+    .cart-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-panel {
+      position: fixed;
+      z-index: 201;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: min(430px, 94vw);
+      background: #0c0c0c;
+      border-left: 1px solid var(--borda);
+      transform: translateX(105%);
+      transition: transform .3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-panel.open {
+      transform: translateX(0);
+    }
+
+    .cart-head {
+      padding: 22px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-head h2 {
+      color: var(--dourado-claro);
+      font-family: Georgia, serif;
+    }
+
+    .cart-close {
+      background: transparent;
+      border: 0;
+      color: #aaa;
+      font-size: 28px;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px;
+    }
+
+    .empty-cart {
+      color: #777;
+      text-align: center;
+      padding: 60px 15px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .cart-item img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 9px;
+      background: #151515;
+    }
+
+    .cart-item h3 {
+      font-size: .92rem;
+      color: #eee;
+      margin-bottom: 5px;
+    }
+
+    .cart-item p {
+      font-size: .8rem;
+      color: #999;
+    }
+
+    .remove-item {
+      background: transparent;
+      border: 0;
+      color: #b77;
+      font-size: 18px;
+    }
+
+    .cart-footer {
+      padding: 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+    }
+
+    .cart-total strong {
+      color: var(--dourado-claro);
+    }
+
+    .send-order {
+      width: 100%;
+      min-height: 50px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--dourado);
+      color: #080808;
+      font-weight: 900;
+    }
+
+    .send-order:hover {
+      background: var(--dourado-claro);
+    }
+
+    /* ============================================================
+       AMPLIAR FOTO DO PRODUTO
+       ============================================================ */
+
+    .image-zoom {
+      cursor: pointer;
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.88);
+      cursor: pointer;
+    }
+
+    .image-modal.open {
+      display: flex;
+    }
+
+    .image-modal img {
+      max-width: 95vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 15px 60px rgba(0,0,0,.65);
+    }
+
+    .image-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 22px;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      background: rgba(0,0,0,.55);
+      color: white;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .image-modal-close:hover {
+      background: rgba(201,164,92,.25);
+      border-color: var(--dourado);
+    }
+
+    /* ============================================================
+       RESPONSIVO
+       ============================================================ */
+
+    @media (max-width: 900px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero {
+        min-height: 560px;
+      }
+
+      .hero-title {
+        font-size: clamp(3.4rem, 17vw, 6.2rem);
+        letter-spacing: .025em;
+      }
+
+      .hero-subtitle {
+        font-size: .68rem;
+        letter-spacing: .16em;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .section {
+        padding: 65px 0;
+      }
+
+      .intro {
+        margin-bottom: 35px;
+      }
+
+      .product-images {
+        aspect-ratio: 1 / 1;
+      }
+    }
+  
+/* ===== MAGIK INK — melhorias de navegação ===== */
+.loja-controles{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  margin:18px 0 24px;
+}
+.loja-controles input,.loja-controles select{
+  background:#111;border:1px solid #2a2a2a;color:#eee;border-radius:12px;
+  padding:12px 14px;outline:none;
+}
+.loja-controles input{flex:1;min-width:210px}
+.loja-controles input:focus,.loja-controles select:focus{border-color:#c9a24a}
+.paginacao{
+  display:flex;justify-content:center;align-items:center;gap:12px;margin:28px 0;
+}
+.paginacao button,.btn-loja{
+  border:1px solid #333;background:#111;color:#eee;border-radius:10px;
+  padding:9px 14px;cursor:pointer;
+}
+.paginacao button:hover,.btn-loja:hover{border-color:#c9a24a}
+.paginacao button:disabled{opacity:.35;cursor:not-allowed}
+.pagina-info{font-size:13px;color:#aaa}
+.badge-produto{
+  display:inline-block;font-size:11px;padding:5px 8px;border-radius:20px;
+  background:#171717;color:#c9a24a;border:1px solid #333;margin-bottom:6px;
+}
+.produto-acoes{display:flex;gap:7px;margin-top:8px}
+.produto-acoes button{flex:1}
+.modal-produto{
+  position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9998;
+  display:none;align-items:center;justify-content:center;padding:18px;
+}
+.modal-produto.aberto{display:flex}
+.modal-produto-card{
+  width:min(760px,100%);max-height:90vh;overflow:auto;background:#101010;
+  border:1px solid #292929;border-radius:18px;padding:20px;position:relative;
+}
+.modal-produto-card img{width:100%;max-height:430px;object-fit:contain;border-radius:12px}
+.fechar-modal-produto{
+  position:absolute;right:14px;top:10px;background:#111;border:1px solid #333;
+  color:#fff;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:20px;
+}
+.cep-box{
+  margin:16px 0;padding:16px;border:1px solid #292929;border-radius:14px;background:#0d0d0d;
+}
+.cep-box h4{margin:0 0 8px;color:#c9a24a}
+.cep-linha{display:flex;gap:8px}
+.cep-linha input{flex:1;min-width:0}
+.cep-linha button{white-space:nowrap}
+.cep-status{font-size:13px;margin-top:9px;color:#aaa}
+.cep-status.ok{color:#8fd18f}.cep-status.erro{color:#e88989}
+.endereco-box{display:none;margin-top:12px}
+.endereco-box.aberto{display:block}
+.endereco-box input{width:100%;box-sizing:border-box;margin:5px 0}
+.aviso-sp{
+  font-size:12px;color:#999;margin-top:8px;line-height:1.4
+}
+@media(max-width:600px){
+  .loja-controles{display:grid;grid-template-columns:1fr}
+  .loja-controles input,.loja-controles select{width:100%;box-sizing:border-box}
+  .cep-linha{flex-direction:column}
+}
+
+</style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       MENU SUPERIOR
+       ============================================================ -->
+  <header class="topbar">
+    <button class="menu-btn" id="openMenu" aria-label="Abrir menu">
+      <span class="menu-icon"><span></span><span></span><span></span></span>
+    </button>
+
+    <div class="cart-wrap">
+      <button class="cart-btn" id="openCart" aria-label="Abrir carrinho">
+        🛒
+      </button>
+      <span class="cart-count" id="cartCount">0</span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MENU LATERAL
+
+       PARA ADICIONAR UM MENU:
+       1. Copie uma linha <a ...> existente.
+       2. Troque o href pelo ID da seção.
+       3. Troque o texto.
+
+       PARA DIMINUIR/REMOVER UM MENU:
+       Apague a linha <a ...> correspondente.
+       ============================================================ -->
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <aside class="side-menu" id="sideMenu">
+    <button class="menu-close" id="closeMenu" aria-label="Fechar menu">×</button>
+
+    <h2>MAGIK INK</h2>
+    <p>Personalizados</p>
+
+    <a href="#inicio">Início</a>
+    <a href="#produtos">Todos os produtos</a>
+    <a href="#miniaturas">Miniaturas</a>
+    <a href="#geek">Geek</a>
+    <a href="#canecas">Canecas</a>
+    <a href="#chaveiros">Chaveiros</a>
+    <a href="#personalizados">Personalizados</a>
+    <a href="#decoracao">Decoração</a>
+    <a href="#personalizacao">Personalize seu produto</a>
+    <a href="#contato">Contato</a>
+  </aside>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <main id="inicio">
+    <section class="hero">
+      <img class="hero-logo" id="heroLogo" src="Imagens/logo att.png" alt="Logo Magik Ink Personalizados">
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content" id="heroContent">
+        <h1 class="hero-title">MAGIK INK</h1>
+        <p class="hero-subtitle">Personalizados</p>
+      </div>
+
+      <div class="scroll-hint">Role para descobrir</div>
+    </section>
+
+    <!-- ============================================================
+         APRESENTAÇÃO
+         ============================================================ -->
+    <section class="section">
+      <div class="intro">
+        <div class="eyebrow">Magik Ink Personalizados</div>
+        <h2>Da sua ideia à realidade.</h2>
+        <p>
+          Criamos peças personalizadas em 3D para transformar ideias,
+          personagens e momentos especiais em algo que você pode tocar.
+        </p>
+      </div>
+
+      <!-- ============================================================
+           CATEGORIAS
+           ============================================================ -->
+      <div class="categories" id="produtos">
+        <button class="category-btn active" data-category="Todos">Todos</button>
+        <button class="category-btn" data-category="Miniaturas">Miniaturas</button>
+        <button class="category-btn" data-category="Geek">Geek</button>
+        <button class="category-btn" data-category="Canecas">Canecas</button>
+        <button class="category-btn" data-category="Chaveiros">Chaveiros</button>
+        <button class="category-btn" data-category="Personalizados">Personalizados</button>
+        <button class="category-btn" data-category="Decoração">Decoração</button>
+      </div>
+
+      <!-- ============================================================
+           PRODUTOS
+
+           COMO ADICIONAR UM PRODUTO:
+           1. Vá até a parte "LISTA DE PRODUTOS" no JavaScript.
+           2. Copie um produto existente.
+           3. Altere id, categoria, nome, preço, descrição e fotos.
+           4. Coloque as fotos dentro da pasta "imagens".
+           5. Use o caminho: "imagens/nome-da-foto.jpg"
+       6. A logo principal deve ficar na mesma pasta do index.html com o nome "logo.png".
+
+           EXEMPLO:
+           {
+             id: 10,
+             categoria: "Geek",
+             nome: "Meu novo produto",
+             preco: 49.90,
+             descricao: "Descrição curta.",
+             fotos: [
+               "imagens/produto-1.jpg",
+               "imagens/produto-2.jpg"
+             ],
+             personalizavel: false
+           }
+
+           Para apenas UMA foto, coloque somente uma foto no array.
+           ============================================================ -->
+
+      
+<div class="loja-controles" id="lojaControles">
+  <input id="buscaProduto" type="search" placeholder="🔎 Procurar produto..." aria-label="Procurar produto">
+  <select id="ordenarProdutos" aria-label="Ordenar produtos">
+    <option value="padrao">Mais recentes</option>
+    <option value="menor">Menor preço</option>
+    <option value="maior">Maior preço</option>
+    <option value="az">Nome A–Z</option>
+    <option value="za">Nome Z–A</option>
+  </select>
+</div>
+
+<div class="products-grid" id="productsGrid"></div>
+
+      <!-- ============================================================
+           ÁREA DE PERSONALIZAÇÃO
+           ============================================================ -->
+      <section class="custom-box" id="personalizacao">
+        <div class="eyebrow">Feito para você</div>
+        <h2>Personalize seu boneco 3D</h2>
+        <p>
+          Não achou o personagem que procura? Escreva sua ideia, escolha o tamanho
+          e envie para a Magik Ink. Nós verificamos a disponibilidade.
+        </p>
+
+        <div class="custom-request">
+          <label for="customIdea">O que você gostaria de criar?</label>
+          <textarea id="customIdea"
+            placeholder="Ex.: Quero o Pikachu com a cabeça do Deadpool e o rabo do Lagarto do Homem-Aranha."></textarea>
+
+          <label for="customSize" style="margin-top:12px;">Escolha o tamanho</label>
+          <select id="customSize" class="custom-size">
+            <option value="6 cm">6 cm</option>
+            <option value="8 cm">8 cm</option>
+            <option value="12 cm">12 cm</option>
+            <option value="15 cm" selected>15 cm</option>
+            <option value="20 cm">20 cm</option>
+          </select>
+
+          <button class="custom-send" id="customSend">
+            Consultar disponibilidade pelo WhatsApp
+          </button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       RODAPÉ
+       ============================================================ -->
+  <footer id="contato">
+    <div class="footer-logo">MAGIK INK</div>
+    <p>Personalizados</p>
+    <p>Da sua ideia à realidade.</p>
+    <p><a href="https://instagram.com/magic_ink_personalizados" target="_blank">@magic_ink_personalizados</a></p>
+  <p class="aviso-sp">📦 Entregas atualmente disponíveis somente para endereços no estado de São Paulo.</p>
+</footer>
+
+  <!-- ============================================================
+       WHATSAPP FLUTUANTE
+
+       TROQUE O NÚMERO ABAIXO:
+       5511999999999 → coloque seu número com DDI + DDD + número.
+       Exemplo: 5511998765432
+       ============================================================ -->
+  <a class="whatsapp-float"
+     id="whatsappFloat"
+     href="#"
+     target="_blank"
+     aria-label="Falar no WhatsApp">✆</a>
+
+  <!-- ============================================================
+       CARRINHO
+       ============================================================ -->
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-head">
+      <h2>Seu pedido</h2>
+      <button class="cart-close" id="closeCart" aria-label="Fechar carrinho">×</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <div class="empty-cart">Seu pedido está vazio.</div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">R$ 0,00</strong>
+      </div>
+      <button class="send-order" id="sendOrder">
+        Envie seu pedido pelo WhatsApp
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       VISUALIZADOR DE FOTOS
+       ============================================================ -->
+  <div class="image-modal" id="imageModal" onclick="fecharImagem(event)">
+    <button class="image-modal-close" type="button" aria-label="Fechar imagem">×</button>
+    <img id="imageModalImg" src="" alt="Imagem ampliada">
+  </div>
+
+  <script>
+    /* ============================================================
+       CONFIGURAÇÃO DO WHATSAPP
+       ============================================================
+
+       COLOQUE SEU NÚMERO AQUI:
+       DDI + DDD + número, sem espaços, sem parênteses e sem traços.
+
+       Exemplo:
+       const WHATSAPP = "5511998765432";
+       ============================================================ */
+
+    const WHATSAPP = "5511932557083";
+
+    const whatsappMessage =
+      "Olá! Vim pelo site da Magik Ink e gostaria de fazer um pedido.";
+
+    /* ============================================================
+       LISTA DE PRODUTOS
+       ============================================================
+
+       ADICIONE/EDITE PRODUTOS AQUI.
+       As fotos devem estar dentro da pasta "imagens".
+
+       Se o produto for personalizável, coloque:
+       personalizavel: true
+
+       Se não for:
+       personalizavel: false
+       ============================================================ */
+
+    const produtos = [
+      {
+        id: 1, categoria: "Geek", nome: "Balde de Pipoca Homem-Aranha", preco: 80.00,
+        descricao: "Balde de pipoca inspirado no Homem-Aranha.", fotos: ["Imagens/Balde de pipoca homem aranha.png"],
+        personalizavel: false
+      },
+      {
+        id: 2, categoria: "Geek", nome: "Batman com Base", preco: 160.00,
+        descricao: "Miniatura do Batman com base.", fotos: ["Imagens/Batman base angulo 2.webp","Imagens/Batman base angulo 3.webp"],
+        personalizavel: false
+      },
+      {
+        id: 3, categoria: "Geek", nome: "Bob Esponja Musculoso", preco: 70.00,
+        descricao: "Bob Esponja em versão musculosa.", fotos: ["Imagens/Bob musculoso.webp"],
+        personalizavel: false
+      },
+      {
+        id: 4, categoria: "Chaveiros", nome: "Chaveiro Capitão América", preco: 15.00,
+        descricao: "Chaveiro do Capitão América.", fotos: ["Imagens/Chaveiro do capitão america.webp"],
+        personalizavel: false
+      },
+      {
+        id: 5, categoria: "Geek", nome: "Homem-Aranha em Pose de Ataque", preco: 160.00,
+        descricao: "Miniatura do Homem-Aranha em pose de ataque.", fotos: ["Imagens/Homem aranha pose de ataque 20cm.webp","Imagens/Homem aranha pose de ataque 20cm angulo 2.webp","Imagens/Homem aranha pose de ataque 20cm angulo 3.webp"],
+        personalizavel: false
+      },
+      {
+        id: 6, categoria: "Geek", nome: "Arma do Deadpool", preco: 150.00,
+        descricao: "Arma do Deadpool com base de suporte inclusa.", fotos: ["Imagens/arma deadpool.webp"],
+        personalizavel: false
+      },
+      {
+        id: 7, categoria: "Chaveiros", nome: "Baby Groot", preco: 15.00,
+        descricao: "Baby Groot em versão chaveiro.", fotos: ["Imagens/baby groot.webp"],
+        personalizavel: false
+      },
+      {
+        id: 8, categoria: "Geek", nome: "Balde de Pipoca Shrek", preco: 60.00,
+        descricao: "Balde de pipoca inspirado no Shrek.", fotos: ["Imagens/balde de pipoca shereck.webp"],
+        personalizavel: false
+      },
+      {
+        id: 9, categoria: "Geek", nome: "Batcar", preco: 110.00,
+        descricao: "Batcar apresentado em dois ângulos.", fotos: ["Imagens/batcarro angulo 1.webp","Imagens/batcar angulo 2.webp"],
+        personalizavel: false
+      },
+      {
+        id: 10, categoria: "Geek", nome: "Batman All Black", preco: 160.00,
+        descricao: "Batman em versão totalmente preta.", fotos: ["Imagens/batman all black.webp"],
+        personalizavel: false
+      },
+      {
+        id: 11, categoria: "Geek", nome: "Batman Caveira", preco: 180.00,
+        descricao: "Batman em versão caveira.", fotos: ["Imagens/batman caveira.webp"],
+        personalizavel: false
+      },
+      {
+        id: 12, categoria: "Miniaturas", nome: "Batman Pop Funko", preco: 60.00,
+        descricao: "Batman em estilo Pop Funko.", fotos: ["Imagens/batman pop funko.webp"],
+        personalizavel: false
+      },
+      {
+        id: 13, categoria: "Geek", nome: "Máscara do Batman", preco: 60.00,
+        descricao: "Máscara do Batman.", fotos: ["Imagens/capacete do batman.webp"],
+        personalizavel: false
+      },
+      {
+        id: 14, categoria: "Geek", nome: "Capacete do Homem de Ferro", preco: 180.00,
+        descricao: "Capacete do Homem de Ferro.", fotos: ["Imagens/capacete do homem de ferro.webp"],
+        personalizavel: false
+      },
+      {
+        id: 15, categoria: "Geek", nome: "Capacete Mandalorian", preco: 180.00,
+        descricao: "Capacete inspirado no Mandalorian.", fotos: ["Imagens/capacete mandalorian.webp"],
+        personalizavel: false
+      },
+      {
+        id: 16, categoria: "Miniaturas", nome: "Charizard 19 cm", preco: 160.00,
+        descricao: "Miniatura do Charizard com 19 cm.", fotos: ["Imagens/charizard 19 cm.webp"],
+        tamanhos: {"19 cm": 160},
+        personalizavel: false
+      },
+      {
+        id: 17, categoria: "Miniaturas", nome: "Charmander Comemorando", preco: 60.00,
+        descricao: "Charmander fofo com os braços levantados.", fotos: ["Imagens/charmander comemorando.webp"],
+        personalizavel: false
+      },
+      {
+        id: 18, categoria: "Miniaturas", nome: "Charmander Surfando", preco: 120.00,
+        descricao: "Charmander surfando.", fotos: ["Imagens/charmander surfando.webp"],
+        personalizavel: false
+      },
+      {
+        id: 19, categoria: "Chaveiros", nome: "Chaveiro Batman", preco: 15.00,
+        descricao: "Chaveiro do Batman.", fotos: ["Imagens/chaveiro batman.webp"],
+        personalizavel: false
+      },
+      {
+        id: 20, categoria: "Chaveiros", nome: "Chaveiro Charmander", preco: 15.00,
+        descricao: "Chaveiro do Charmander.", fotos: ["Imagens/chaveiro charmander.webp"],
+        personalizavel: false
+      },
+      {
+        id: 21, categoria: "Chaveiros", nome: "Chaveiro Deadpool", preco: 20.00,
+        descricao: "Chaveiro do Deadpool.", fotos: ["Imagens/chaveiro deadpool.webp"],
+        personalizavel: false
+      },
+      {
+        id: 22, categoria: "Chaveiros", nome: "Chaveiro Homem-Aranha", preco: 20.00,
+        descricao: "Chaveiro do Homem-Aranha.", fotos: ["Imagens/chaveiro homem aranha.webp"],
+        personalizavel: false
+      },
+      {
+        id: 23, categoria: "Geek", nome: "Crânio Capitão América", preco: 15.00,
+        descricao: "Crânio inspirado no Capitão América.", fotos: ["Imagens/cranio capitão america.webp"],
+        personalizavel: false
+      },
+      {
+        id: 24, categoria: "Geek", nome: "Doomsday Premium", preco: 180.00,
+        descricao: "Peça premium do Doomsday.", fotos: ["Imagens/dommsday.webp"],
+        personalizavel: false
+      },
+      {
+        id: 25, categoria: "Miniaturas", nome: "Eevee Sentada", preco: 80.00,
+        descricao: "Eevee em posição sentada.", fotos: ["Imagens/eeve sentada.webp"],
+        personalizavel: false
+      },
+      {
+        id: 26, categoria: "Miniaturas", nome: "Goku Amarelo", preco: 180.00,
+        descricao: "Miniatura do Goku em transformação.", fotos: ["Imagens/goku amarelo.webp"],
+        personalizavel: false
+      },
+      {
+        id: 27, categoria: "Miniaturas", nome: "Goku Cabelo Branco", preco: 180.00,
+        descricao: "Miniatura do Goku com cabelo branco.", fotos: ["Imagens/goku cabelo branco.webp"],
+        personalizavel: false
+      },
+      {
+        id: 28, categoria: "Miniaturas", nome: "Goku Jovem", preco: 60.00,
+        descricao: "Miniatura do Goku jovem.", fotos: ["Imagens/goku jovem.webp"],
+        personalizavel: false
+      },
+      {
+        id: 29, categoria: "Geek", nome: "Homem de Ferro", preco: 120.00,
+        descricao: "Miniatura do Homem de Ferro.", fotos: ["Imagens/homem de ferro.webp"],
+        personalizavel: false
+      },
+      {
+        id: 30, categoria: "Geek", nome: "Hulk com Base", preco: 180.00,
+        descricao: "Miniatura do Hulk com base.", fotos: ["Imagens/hulk base.png"],
+        personalizavel: false
+      },
+      {
+        id: 31, categoria: "Geek", nome: "Hulk Vermelho", preco: 200.00,
+        descricao: "Miniatura do Hulk Vermelho.", fotos: ["Imagens/hulk vermelho.webp"],
+        personalizavel: false
+      },
+      {
+        id: 32, categoria: "Miniaturas", nome: "Luffy Branco", preco: 190.00,
+        descricao: "Miniatura do Luffy em versão branca.", fotos: ["Imagens/luffy branco.webp"],
+        personalizavel: false
+      },
+      {
+        id: 33, categoria: "Miniaturas", nome: "Luffy", preco: 160.00,
+        descricao: "Miniatura do Luffy.", fotos: ["Imagens/lufy.webp"],
+        personalizavel: false
+      },
+      {
+        id: 34, categoria: "Miniaturas", nome: "Luigi", preco: 160.00,
+        descricao: "Miniatura do Luigi.", fotos: ["Imagens/luigi.png"],
+        personalizavel: false
+      },
+      {
+        id: 35, categoria: "Miniaturas", nome: "Mario", preco: 120.00,
+        descricao: "Miniatura do Mario.", fotos: ["Imagens/mario.webp"],
+        personalizavel: false
+      },
+      {
+        id: 36, categoria: "Miniaturas", nome: "Mini Bulbassauro", preco: 120.00,
+        descricao: "Miniatura do Bulbassauro em tamanho normal.", fotos: ["Imagens/mini bulbassauro.webp"],
+        tamanhos: {"Tamanho normal": 120},
+        personalizavel: false
+      },
+      {
+        id: 37, categoria: "Geek", nome: "Ocarina de Zelda com Base", preco: 140.00,
+        descricao: "Ocarina inspirada em Zelda com base.", fotos: ["Imagens/occarina zelda.webp"],
+        personalizavel: false
+      },
+      {
+        id: 38, categoria: "Decoração", nome: "Porta-Objetos Bob Esponja", preco: 60.00,
+        descricao: "Porta-objetos do Bob Esponja.", fotos: ["Imagens/porta bob esponja.webp"],
+        personalizavel: false
+      },
+      {
+        id: 39, categoria: "Geek", nome: "Spider Noir", preco: 60.00,
+        descricao: "Miniatura do Spider Noir.", fotos: ["Imagens/spider noir.png"],
+        personalizavel: false
+      },
+      {
+        id: 40, categoria: "Geek", nome: "Suporte de Controle Mario", preco: 100.00,
+        descricao: "Suporte de controle inspirado no Mario.", fotos: ["Imagens/suporte de controle mario.webp"],
+        personalizavel: false
+      },
+      {
+        id: 41, categoria: "Geek", nome: "Suporte de Fone Homem-Aranha", preco: 100.00,
+        descricao: "Suporte de fone inspirado no Homem-Aranha.", fotos: ["Imagens/suporte de fone homem aranha.png"],
+        personalizavel: false
+      },
+      {
+        id: 42, categoria: "Geek", nome: "Suporte Yoshi", preco: 40.00,
+        descricao: "Suporte inspirado no Yoshi.", fotos: ["Imagens/suporte yoshi.webp"],
+        personalizavel: false
+      },
+      {
+        id: 43, categoria: "Geek", nome: "Wolverine Matando Deadpool", preco: 160.00,
+        descricao: "Cena de ação do Wolverine contra o Deadpool.", fotos: ["Imagens/volverine matando deadpool.webp"],
+        personalizavel: false
+      }
+    ];
+
+    /* ============================================================
+       NÃO PRECISA ALTERAR ABAIXO DESTA LINHA
+       ============================================================ */
+
+    const productsGrid = document.getElementById("productsGrid");
+    const cartCount = document.getElementById("cartCount");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    const menuBackdrop = document.getElementById("menuBackdrop");
+    const sideMenu = document.getElementById("sideMenu");
+    const cartBackdrop = document.getElementById("cartBackdrop");
+    const cartPanel = document.getElementById("cartPanel");
+
+    // Recupera o carrinho salvo no navegador.
+    // Assim, os produtos continuam no carrinho mesmo depois de apertar F5.
+    let carrinho = JSON.parse(localStorage.getItem("magikInkCarrinho") || "[]");
+    let cartAlreadyOpened = false;
+    let currentCategory = "Todos";
+    const indicesFotos = {};
+
+    function dinheiro(valor) {
+      return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+    }
+
+    function whatsappUrl(message) {
+      return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(message);
+    }
+
+    function renderProducts() {
+      const filtrados = currentCategory === "Todos"
+        ? produtos
+        : produtos.filter(p => p.categoria === currentCategory);
+
+      productsGrid.innerHTML = "";
+
+      filtrados.forEach(produto => {
+        if (indicesFotos[produto.id] === undefined) {
+          indicesFotos[produto.id] = 0;
+        }
+
+        const tamanhos = produto.tamanhos || { "Único": produto.preco };
+        const primeiroTamanho = Object.keys(tamanhos)[0];
+        const precoInicial = tamanhos[primeiroTamanho];
+
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div class="product-images">
+            <img id="img-${produto.id}"
+                 class="image-zoom"
+                 src="${produto.fotos[indicesFotos[produto.id]]}"
+                 alt="${produto.nome}"
+                 onclick="ampliarImagem('${produto.fotos[indicesFotos[produto.id]]}', '${produto.nome.replace(/'/g, "\\'")}')"
+                 onerror="this.src='https://placehold.co/900x900/111111/C9A45C?text=ADICIONE+A+IMAGEM'">
+
+            ${produto.fotos.length > 1 ? `
+              <button class="image-arrow prev" onclick="mudarFoto(${produto.id}, -1)" aria-label="Foto anterior">‹</button>
+              <button class="image-arrow next" onclick="mudarFoto(${produto.id}, 1)" aria-label="Próxima foto">›</button>
+              <div class="dots">
+                ${produto.fotos.map((_, i) => `
+                  <button class="dot ${i === indicesFotos[produto.id] ? "active" : ""}"
+                          onclick="irParaFoto(${produto.id}, ${i})"
+                          aria-label="Ir para foto ${i + 1}"></button>
+                `).join("")}
+              </div>
+            ` : ""}
+          </div>
+
+          <div class="product-info">
+            <div class="product-category">${produto.categoria}</div>
+            <h3 class="product-name">${produto.nome}</h3>
+            <p class="product-description">${produto.descricao}</p>
+
+            <div class="size-selector">
+              <label for="size-${produto.id}">Escolha o tamanho</label>
+              <select id="size-${produto.id}" onchange="atualizarPrecoProduto(${produto.id})">
+                ${Object.entries(tamanhos).map(([tamanho, preco]) => `
+                  <option value="${tamanho}" data-price="${preco}" ${tamanho === primeiroTamanho ? "selected" : ""}>
+                    ${tamanho} — ${dinheiro(preco)}
+                  </option>
+                `).join("")}
+              </select>
+            </div>
+
+            <div class="product-price" id="price-${produto.id}">
+              ${dinheiro(precoInicial)}
+            </div>
+
+            <div class="product-actions">
+              <button class="btn btn-cart" onclick="adicionarCarrinho(${produto.id})">
+                Adicionar ao pedido
+              </button>
+
+              ${produto.personalizavel ? `
+                <button class="btn btn-custom" onclick="personalizarProduto(${produto.id})">
+                  Personalizar este personagem
+                </button>
+              ` : ""}
+            </div>
+          </div>
+        `;
+
+        productsGrid.appendChild(card);
+      });
+    }
+
+    function ampliarImagem(src, nome) {
+      const modal = document.getElementById("imageModal");
+      const imagem = document.getElementById("imageModalImg");
+
+      imagem.src = src;
+      imagem.alt = nome || "Imagem ampliada";
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function fecharImagem(event) {
+      // Fecha clicando no fundo ou no X, mas não ao clicar na própria imagem.
+      if (
+        event &&
+        event.target &&
+        event.target.id !== "imageModal" &&
+        !event.target.classList.contains("image-modal-close")
+      ) {
+        return;
+      }
+
+      const modal = document.getElementById("imageModal");
+      const imagem = document.getElementById("imageModalImg");
+
+      modal.classList.remove("open");
+      imagem.src = "";
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        fecharImagem({ target: document.getElementById("imageModal") });
+      }
+    });
+
+    function atualizarPrecoProduto(id) {
+      const select = document.getElementById(`size-${id}`);
+      const price = document.getElementById(`price-${id}`);
+      if (!select || !price) return;
+
+      const option = select.options[select.selectedIndex];
+      price.textContent = dinheiro(Number(option.dataset.price));
+    }
+
+    function mudarFoto(id, direcao) {
+      const produto = produtos.find(p => p.id === id);
+      if (!produto || produto.fotos.length <= 1) return;
+
+      let indice = indicesFotos[id] + direcao;
+
+      if (indice < 0) indice = produto.fotos.length - 1;
+      if (indice >= produto.fotos.length) indice = 0;
+
+      indicesFotos[id] = indice;
+      renderProducts();
+    }
+
+    function irParaFoto(id, indice) {
+      indicesFotos[id] = indice;
+      renderProducts();
+    }
+
+    function adicionarCarrinho(id) {
+      const produto = produtos.find(p => p.id === id);
+      if (!produto) return;
+
+      const select = document.getElementById(`size-${id}`);
+      const tamanho = select ? select.value : "Único";
+      const preco = produto.tamanhos ? Number(select.options[select.selectedIndex].dataset.price) : produto.preco;
+
+      carrinho.push({
+        ...produto,
+        tamanhoSelecionado: tamanho,
+        precoSelecionado: preco
+      });
+
+      salvarCarrinho();
+      atualizarCarrinho();
+
+      const botaoCarrinho = document.getElementById("openCart");
+      const img = event?.target?.closest(".product-card")?.querySelector(".product-images img");
+
+      if (img && botaoCarrinho) {
+        const clone = img.cloneNode(true);
+        const r1 = img.getBoundingClientRect();
+        const r2 = botaoCarrinho.getBoundingClientRect();
+
+        clone.style.cssText = `
+          position: fixed;
+          left: ${r1.left}px;
+          top: ${r1.top}px;
+          width: ${r1.width}px;
+          height: ${r1.height}px;
+          object-fit: contain;
+          z-index: 99999;
+          pointer-events: none;
+          transition: all .7s cubic-bezier(.2,.8,.2,1);
+        `;
+
+        document.body.appendChild(clone);
+
+        requestAnimationFrame(() => {
+          clone.style.left = `${r2.left + r2.width / 2 - 20}px`;
+          clone.style.top = `${r2.top + r2.height / 2 - 20}px`;
+          clone.style.width = "40px";
+          clone.style.height = "40px";
+          clone.style.opacity = "0.3";
+          clone.style.transform = "scale(.4)";
+        });
+
+        setTimeout(() => clone.remove(), 750);
+      }
+
+      if (!cartAlreadyOpened) {
+        abrirCarrinho();
+        cartAlreadyOpened = true;
+      }
+    }
+
+    function removerCarrinho(index) {
+      carrinho.splice(index, 1);
+      salvarCarrinho();
+      atualizarCarrinho();
+    }
+
+    function salvarCarrinho() {
+      localStorage.setItem("magikInkCarrinho", JSON.stringify(carrinho));
+    }
+
+    function atualizarCarrinho() {
+      cartCount.textContent = carrinho.length;
+
+      if (carrinho.length === 0) {
+        cartItems.innerHTML = `<div class="empty-cart">Seu pedido está vazio.</div>`;
+        cartTotal.textContent = "R$ 0,00";
+        return;
+      }
+
+      cartItems.innerHTML = carrinho.map((produto, index) => `
+        <div class="cart-item">
+          <img src="${produto.fotos[0]}" alt="${produto.nome}">
+          <div>
+            <h3>${produto.nome}</h3>
+            <p>${produto.tamanhoSelecionado || "Único"} — ${dinheiro(produto.precoSelecionado ?? produto.preco)}</p>
+          </div>
+          <button class="remove-item" onclick="removerCarrinho(${index})" aria-label="Remover">×</button>
+        </div>
+      `).join("");
+
+      const total = carrinho.reduce(
+        (soma, produto) => soma + (produto.precoSelecionado ?? produto.preco),
+        0
+      );
+
+      cartTotal.textContent = dinheiro(total);
+    }
+
+    function personalizarProduto(id) {
+      const produto = produtos.find(p => p.id === id);
+      if (!produto) return;
+
+      const select = document.getElementById(`size-${id}`);
+      const tamanho = select ? select.value : "Único";
+      const preco = produto.tamanhos ? Number(select.options[select.selectedIndex].dataset.price) : produto.preco;
+
+      const mensagem =
+        `Olá! Vim pelo site da Magik Ink e quero personalizar o produto "${produto.nome}".%0A` +
+        `Tamanho: ${tamanho}%0A` +
+        `Preço de referência: ${dinheiro(preco)}%0A` +
+        `Gostaria de saber as possibilidades de personalização e disponibilidade.`;
+
+      window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(
+        `Olá! Vim pelo site da Magik Ink e quero personalizar o produto "${produto.nome}".\n` +
+        `Tamanho: ${tamanho}\n` +
+        `Preço de referência: ${dinheiro(preco)}\n` +
+        `Gostaria de saber as possibilidades de personalização e disponibilidade.`
+      ), "_blank");
+    }
+
+    function enviarPedido() {
+      if (carrinho.length === 0) return;
+
+      const linhas = carrinho.map((produto, i) =>
+        `${i + 1}. ${produto.nome} — ${produto.tamanhoSelecionado || "Único"} — ${dinheiro(produto.precoSelecionado ?? produto.preco)}`
+      );
+
+      const total = carrinho.reduce(
+        (soma, produto) => soma + (produto.precoSelecionado ?? produto.preco),
+        0
+      );
+
+      const mensagem =
+        "Olá! Vim pelo site da Magik Ink e gostaria de enviar meu pedido.%0A%0A" +
+        linhas.join("%0A") +
+        `%0A%0ATotal: ${dinheiro(total)}%0A%0A` +
+        "Gostaria de confirmar disponibilidade e combinar o pagamento.";
+
+      window.open("https://wa.me/" + WHATSAPP + "?text=" + mensagem, "_blank");
+    }
+
+    function abrirMenu() {
+      sideMenu.classList.add("open");
+      menuBackdrop.classList.add("open");
+    }
+
+    function fecharMenu() {
+      sideMenu.classList.remove("open");
+      menuBackdrop.classList.remove("open");
+    }
+
+    function abrirCarrinho() {
+      cartPanel.classList.add("open");
+      cartBackdrop.classList.add("open");
+    }
+
+    function fecharCarrinho() {
+      cartPanel.classList.remove("open");
+      cartBackdrop.classList.remove("open");
+    }
+
+    document.getElementById("openMenu").addEventListener("click", abrirMenu);
+    document.getElementById("closeMenu").addEventListener("click", fecharMenu);
+    menuBackdrop.addEventListener("click", fecharMenu);
+
+    document.getElementById("openCart").addEventListener("click", abrirCarrinho);
+    document.getElementById("closeCart").addEventListener("click", fecharCarrinho);
+    cartBackdrop.addEventListener("click", fecharCarrinho);
+
+    document.getElementById("sendOrder").addEventListener("click", enviarPedido);
+
+    document.querySelectorAll(".side-menu a").forEach(link => {
+      link.addEventListener("click", fecharMenu);
+    });
+
+    document.querySelectorAll(".category-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        currentCategory = button.dataset.category;
+        renderProducts();
+      });
+    });
+
+    document.getElementById("whatsappFloat").href = whatsappUrl(whatsappMessage);
+    document.getElementById("customSend").addEventListener("click", () => {
+      const ideia = document.getElementById("customIdea").value.trim();
+      const tamanho = document.getElementById("customSize").value;
+
+      if (!ideia) {
+        alert("Escreva primeiro o que você gostaria de criar.");
+        document.getElementById("customIdea").focus();
+        return;
+      }
+
+      const mensagem =
+        `Olá! Vim pelo site da Magik Ink e quero criar um produto personalizado.%0A%0A` +
+        `Minha ideia: ${encodeURIComponent(ideia)}%0A` +
+        `Tamanho desejado: ${encodeURIComponent(tamanho)}%0A%0A` +
+        `Gostaria de saber se vocês conseguem fazer e qual seria o valor.`;
+
+      window.open("https://wa.me/" + WHATSAPP + "?text=" + mensagem, "_blank");
+    });
+
+    /* ============================================================
+       EFEITO DE ROLAGEM DA PRIMEIRA TELA
+
+       O "MAGIK INK" começa enorme no centro.
+       Ao rolar, ele sobe e diminui.
+       A logo de fundo também sobe/diminui e perde intensidade.
+       ============================================================ */
+
+    const hero = document.querySelector(".hero");
+    const heroContent = document.getElementById("heroContent");
+    const heroLogo = document.getElementById("heroLogo");
+
+    function atualizarHero() {
+      const scroll = Math.min(window.scrollY, window.innerHeight);
+      const progresso = scroll / window.innerHeight;
+
+      heroContent.style.transform =
+        `translateY(${-progresso * 48}vh) scale(${1 - progresso * .58})`;
+
+      heroContent.style.opacity = String(Math.max(.15, 1 - progresso * 1.15));
+
+      heroLogo.style.transform =
+        `translateY(${-progresso * 15}vh) scale(${1.05 - progresso * .08})`;
+
+      heroLogo.style.opacity = String(Math.max(.07, .24 - progresso * .17));
+    }
+
+    window.addEventListener("scroll", atualizarHero, { passive: true });
+    atualizarHero();
+
+    renderProducts();
+    atualizarCarrinho();
+  </script>
+
+<div class="cep-box">
+  <h4>📍 Entrega em São Paulo</h4>
+  <div class="aviso-sp">Atendemos atualmente somente endereços dentro do estado de São Paulo.</div>
+  <div class="cep-linha">
+    <input id="cepEntrega" type="text" inputmode="numeric" maxlength="9" placeholder="Digite seu CEP (00000-000)">
+    <button class="btn-loja" type="button" onclick="validarCEP()">Verificar CEP</button>
+  </div>
+  <div id="cepStatus" class="cep-status"></div>
+  <div id="enderecoBox" class="endereco-box">
+    <input id="enderecoEntrega" type="text" placeholder="Rua / Avenida">
+    <input id="numeroEntrega" type="text" placeholder="Número">
+    <input id="complementoEntrega" type="text" placeholder="Complemento (opcional)">
+    <input id="bairroEntrega" type="text" placeholder="Bairro">
+    <input id="cidadeEntrega" type="text" placeholder="Cidade">
+    <input id="estadoEntrega" type="text" placeholder="Estado" value="SP" readonly>
+  </div>
+</div>
+
+
+<script>
+/* ============================================================
+   MAGIK INK — UPGRADES
+   Busca, ordenação, 20 por página, detalhes, favoritos e CEP/SP
+   ============================================================ */
+(function(){
+  const PAGE_SIZE = 20;
+  let paginaAtual = 1;
+  let favoritos = JSON.parse(localStorage.getItem("magikInkFavoritos") || "[]");
+
+  const byId = id => document.getElementById(id);
+
+  function obterProdutos(){
+    if (Array.isArray(window.produtos)) return window.produtos;
+    try { if (typeof produtos !== "undefined" && Array.isArray(produtos)) return produtos; } catch(e){}
+    return [];
+  }
+
+  function textoProduto(p){
+    return ((p.nome||p.name||"") + " " + (p.categoria||p.category||"") + " " + (p.descricao||p.description||"")).toLowerCase();
+  }
+
+  function precoProduto(p){
+    return Number(p.preco ?? p.price ?? 0) || 0;
+  }
+
+  function aplicarFiltros(lista){
+    const busca = (byId("buscaProduto")?.value || "").trim().toLowerCase();
+    const ordem = byId("ordenarProdutos")?.value || "padrao";
+    let r = lista.filter(p => !busca || textoProduto(p).includes(busca));
+
+    if(ordem==="menor") r.sort((a,b)=>precoProduto(a)-precoProduto(b));
+    if(ordem==="maior") r.sort((a,b)=>precoProduto(b)-precoProduto(a));
+    if(ordem==="az") r.sort((a,b)=>(a.nome||a.name||"").localeCompare(b.nome||b.name||"","pt-BR"));
+    if(ordem==="za") r.sort((a,b)=>(b.nome||b.name||"").localeCompare(a.nome||a.name||"","pt-BR"));
+    return r;
+  }
+
+  function renderPaginacao(total){
+    let p = byId("paginacaoMagik");
+    if(!p){
+      p = document.createElement("div");
+      p.id="paginacaoMagik";
+      p.className="paginacao";
+      const grid = document.querySelector("#productGrid,.produtos-grid,.products-grid,.grid-produtos");
+      if(grid) grid.parentNode.insertBefore(p,grid.nextSibling);
+    }
+    const paginas = Math.max(1,Math.ceil(total/PAGE_SIZE));
+    paginaAtual = Math.min(paginaAtual,paginas);
+    p.innerHTML = `
+      <button ${paginaAtual<=1?"disabled":""} onclick="window.magikPagina(-1)">‹</button>
+      <span class="pagina-info">Página ${paginaAtual} de ${paginas}</span>
+      <button ${paginaAtual>=paginas?"disabled":""} onclick="window.magikPagina(1)">›</button>
+    `;
+  }
+
+  window.magikPagina = function(delta){
+    paginaAtual += delta;
+    if(typeof window.renderProducts === "function") window.renderProducts();
+    else if(typeof renderProducts === "function") renderProducts();
+    window.scrollTo({top:(byId("produtos")||byId("productGrid")||document.body).offsetTop-80,behavior:"smooth"});
+  };
+
+  function instalarControles(){
+    byId("buscaProduto")?.addEventListener("input",()=>{paginaAtual=1; if(typeof renderProducts==="function") renderProducts();});
+    byId("ordenarProdutos")?.addEventListener("change",()=>{paginaAtual=1; if(typeof renderProducts==="function") renderProducts();});
+  }
+
+  // Make a helper available for a modified renderer without replacing the user's product data.
+  window.magikGetPage = function(lista){
+    const filtrados = aplicarFiltros(lista);
+    renderPaginacao(filtrados.length);
+    const inicio=(paginaAtual-1)*PAGE_SIZE;
+    return filtrados.slice(inicio,inicio+PAGE_SIZE);
+  };
+
+  window.magikResetPage=function(){paginaAtual=1;};
+
+  // Favorites
+  window.toggleFavorito=function(id){
+    id=String(id);
+    const i=favoritos.indexOf(id);
+    if(i>=0) favoritos.splice(i,1); else favoritos.push(id);
+    localStorage.setItem("magikInkFavoritos",JSON.stringify(favoritos));
+    document.querySelectorAll('[data-fav-id="'+id+'"]').forEach(b=>{
+      b.textContent=favoritos.includes(id)?"♥":"♡";
+    });
+  };
+  window.isFavorito=id=>favoritos.includes(String(id));
+
+  // Product details modal, created only when requested.
+  window.abrirDetalhesProduto=function(id){
+    const lista=obterProdutos();
+    const p=lista.find(x=>String(x.id)===String(id));
+    if(!p) return;
+    let m=byId("modalDetalhesMagik");
+    if(!m){
+      m=document.createElement("div");
+      m.id="modalDetalhesMagik";m.className="modal-produto";
+      m.innerHTML='<div class="modal-produto-card"><button class="fechar-modal-produto" onclick="fecharDetalhesProduto()">×</button><div id="conteudoDetalhesMagik"></div></div>';
+      m.addEventListener("click",e=>{if(e.target===m) fecharDetalhesProduto()});
+      document.body.appendChild(m);
+    }
+    const nome=p.nome||p.name||"Produto";
+    const img=p.imagem||p.image||p.img||"";
+    const desc=p.descricao||p.description||"Personalizado pela Magik Ink.";
+    const preco=precoProduto(p);
+    byId("conteudoDetalhesMagik").innerHTML=`
+      ${img?`<img src="${img}" alt="${nome}" loading="lazy" decoding="async">`:""}
+      <h2>${nome}</h2>
+      <p>${desc}</p>
+      <strong>R$ ${preco.toFixed(2).replace(".",",")}</strong>
+    `;
+    m.classList.add("aberto");
+  };
+  window.fecharDetalhesProduto=function(){byId("modalDetalhesMagik")?.classList.remove("aberto")};
+
+  // CEP: SP only. CEP ranges for the state are validated by the ViaCEP UF response.
+  window.validarCEP=async function(){
+    const input=byId("cepEntrega"), status=byId("cepStatus"), box=byId("enderecoBox");
+    if(!input||!status) return;
+    const cep=input.value.replace(/\D/g,"");
+    if(cep.length!==8){
+      status.className="cep-status erro"; status.textContent="Digite um CEP válido com 8 números.";
+      box?.classList.remove("aberto"); return;
+    }
+    status.className="cep-status"; status.textContent="Consultando CEP…";
+    try{
+      const r=await fetch("https://viacep.com.br/ws/"+cep+"/json/");
+      const d=await r.json();
+      if(d.erro){throw new Error("CEP não encontrado");}
+      if(d.uf!=="SP"){
+        status.className="cep-status erro";
+        status.textContent="No momento, entregamos somente no estado de São Paulo.";
+        box?.classList.remove("aberto"); return;
+      }
+      status.className="cep-status ok";
+      status.textContent="CEP de São Paulo confirmado. Complete o endereço.";
+      if(byId("enderecoEntrega")) byId("enderecoEntrega").value=d.logradouro||"";
+      if(byId("bairroEntrega")) byId("bairroEntrega").value=d.bairro||"";
+      if(byId("cidadeEntrega")) byId("cidadeEntrega").value=d.localidade||"";
+      if(byId("estadoEntrega")) byId("estadoEntrega").value="SP";
+      box?.classList.add("aberto");
+    }catch(e){
+      status.className="cep-status erro"; status.textContent="Não foi possível localizar esse CEP. Confira os números.";
+      box?.classList.remove("aberto");
+    }
+  };
+
+  // CEP formatting
+  document.addEventListener("input",e=>{
+    if(e.target?.id==="cepEntrega"){
+      let v=e.target.value.replace(/\D/g,"").slice(0,8);
+      if(v.length>5)v=v.slice(0,5)+"-"+v.slice(5);
+      e.target.value=v;
+    }
+  });
+
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape") window.fecharDetalhesProduto?.();
+  });
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    instalarControles();
+
+    // Lazy-load existing product images without rewriting their URLs.
+    document.querySelectorAll("img").forEach(img=>{
+      if(img.closest(".logo")) return;
+      if(!img.hasAttribute("loading")) img.setAttribute("loading","lazy");
+      if(!img.hasAttribute("decoding")) img.setAttribute("decoding","async");
+    });
+
+    // Give existing product cards useful actions where the card has a product id.
+    document.querySelectorAll("[data-id]").forEach(card=>{
+      const id=card.getAttribute("data-id");
+      if(!id || card.querySelector(".produto-acoes")) return;
+      const actions=document.createElement("div");
+      actions.className="produto-acoes";
+      actions.innerHTML=`<button class="btn-loja" onclick="abrirDetalhesProduto('${id}')">Ver detalhes</button><button class="btn-loja" data-fav-id="${id}" onclick="toggleFavorito('${id}')">${window.isFavorito(id)?"♥":"♡"}</button>`;
+      card.appendChild(actions);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
