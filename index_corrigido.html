@@ -936,7 +936,7 @@
        ============================================================ -->
   <main id="inicio">
     <section class="hero">
-      <img class="hero-logo" id="heroLogo" src="logo.png" alt="Logo Magik Ink Personalizados">
+      <img class="hero-logo" id="heroLogo" src="Imagens/logo att.png" alt="Logo Magik Ink Personalizados">
       <div class="hero-overlay"></div>
 
       <div class="hero-content" id="heroContent">
@@ -1097,7 +1097,7 @@
        const WHATSAPP = "5511998765432";
        ============================================================ */
 
-    const WHATSAPP = "5511999999999";
+    const WHATSAPP = "5511932557083";
 
     const whatsappMessage =
       "Olá! Vim pelo site da Magik Ink e gostaria de fazer um pedido.";
@@ -1118,59 +1118,220 @@
 
     const produtos = [
       {
-        id: 1,
-        categoria: "Geek",
-        nome: "Homem-Aranha 3D",
-        preco: 70.00,
-        descricao: "Miniatura 3D. Escolha o tamanho antes de adicionar ao pedido.",
-        fotos: [
-          "imagens/homem-aranha-1.jpg"
-        ],
-        tamanhos: {
-          "6 cm": 35.00,
-          "8 cm": 45.00,
-          "12 cm": 55.00,
-          "15 cm": 70.00,
-          "20 cm": 90.00
-        },
-        personalizavel: true
+        id: 1, categoria: "Geek", nome: "Balde de Pipoca Homem-Aranha", preco: 80.00,
+        descricao: "Balde de pipoca inspirado no Homem-Aranha.", fotos: ["Imagens/Balde de pipoca homem aranha.png"]
+        personalizavel: false
       },
-
       {
-        id: 2,
-        categoria: "Miniaturas",
-        nome: "Miniatura Personalizada",
-        preco: 70.00,
-        descricao: "Envie sua ideia e escolha o tamanho da sua miniatura.",
-        fotos: [
-          "imagens/miniatura-personalizada-1.jpg"
-        ],
-        tamanhos: {
-          "6 cm": 35.00,
-          "8 cm": 45.00,
-          "12 cm": 55.00,
-          "15 cm": 70.00,
-          "20 cm": 90.00
-        },
-        personalizavel: true
+        id: 2, categoria: "Geek", nome: "Batman com Base", preco: 160.00,
+        descricao: "Miniatura do Batman com base.", fotos: ["Imagens/Batman base angulo 2.webp","Imagens/Batman base angulo 3.webp"]
+        personalizavel: false
       },
-
       {
-        id: 3,
-        categoria: "Decoração",
-        nome: "Peça Decorativa",
-        preco: 45.00,
-        descricao: "Peça decorativa produzida em impressão 3D.",
-        fotos: [
-          "imagens/decoracao-1.jpg"
-        ],
-        tamanhos: {
-          "6 cm": 30.00,
-          "8 cm": 40.00,
-          "12 cm": 50.00,
-          "15 cm": 60.00,
-          "20 cm": 80.00
-        },
+        id: 3, categoria: "Geek", nome: "Bob Esponja Musculoso", preco: 70.00,
+        descricao: "Bob Esponja em versão musculosa.", fotos: ["Imagens/Bob musculoso.webp"]
+        personalizavel: false
+      },
+      {
+        id: 4, categoria: "Chaveiros", nome: "Chaveiro Capitão América", preco: 15.00,
+        descricao: "Chaveiro do Capitão América.", fotos: ["Imagens/Chaveiro do capitão america.webp"]
+        personalizavel: false
+      },
+      {
+        id: 5, categoria: "Geek", nome: "Homem-Aranha em Pose de Ataque", preco: 160.00,
+        descricao: "Miniatura do Homem-Aranha em pose de ataque.", fotos: ["Imagens/Homem aranha pose de ataque 20cm.webp","Imagens/Homem aranha pose de ataque 20cm angulo 2.webp","Imagens/Homem aranha pose de ataque 20cm angulo 3.webp"]
+        personalizavel: false
+      },
+      {
+        id: 6, categoria: "Geek", nome: "Arma do Deadpool", preco: 150.00,
+        descricao: "Arma do Deadpool com base de suporte inclusa.", fotos: ["Imagens/arma deadpool.webp"]
+        personalizavel: false
+      },
+      {
+        id: 7, categoria: "Chaveiros", nome: "Baby Groot", preco: 15.00,
+        descricao: "Baby Groot em versão chaveiro.", fotos: ["Imagens/baby groot.webp"]
+        personalizavel: false
+      },
+      {
+        id: 8, categoria: "Geek", nome: "Balde de Pipoca Shrek", preco: 60.00,
+        descricao: "Balde de pipoca inspirado no Shrek.", fotos: ["Imagens/balde de pipoca shereck.webp"]
+        personalizavel: false
+      },
+      {
+        id: 9, categoria: "Geek", nome: "Batcar", preco: 110.00,
+        descricao: "Batcar apresentado em dois ângulos.", fotos: ["Imagens/batcarro angulo 1.webp","Imagens/batcar angulo 2.webp"]
+        personalizavel: false
+      },
+      {
+        id: 10, categoria: "Geek", nome: "Batman All Black", preco: 160.00,
+        descricao: "Batman em versão totalmente preta.", fotos: ["Imagens/batman all black.webp"]
+        personalizavel: false
+      },
+      {
+        id: 11, categoria: "Geek", nome: "Batman Caveira", preco: 180.00,
+        descricao: "Batman em versão caveira.", fotos: ["Imagens/batman caveira.webp"]
+        personalizavel: false
+      },
+      {
+        id: 12, categoria: "Miniaturas", nome: "Batman Pop Funko", preco: 60.00,
+        descricao: "Batman em estilo Pop Funko.", fotos: ["Imagens/batman pop funko.webp"]
+        personalizavel: false
+      },
+      {
+        id: 13, categoria: "Geek", nome: "Máscara do Batman", preco: 60.00,
+        descricao: "Máscara do Batman.", fotos: ["Imagens/capacete do batman.webp"]
+        personalizavel: false
+      },
+      {
+        id: 14, categoria: "Geek", nome: "Capacete do Homem de Ferro", preco: 180.00,
+        descricao: "Capacete do Homem de Ferro.", fotos: ["Imagens/capacete do homem de ferro.webp"]
+        personalizavel: false
+      },
+      {
+        id: 15, categoria: "Geek", nome: "Capacete Mandalorian", preco: 180.00,
+        descricao: "Capacete inspirado no Mandalorian.", fotos: ["Imagens/capacete mandalorian.webp"]
+        personalizavel: false
+      },
+      {
+        id: 16, categoria: "Miniaturas", nome: "Charizard 19 cm", preco: 160.00,
+        descricao: "Miniatura do Charizard com 19 cm.", fotos: ["Imagens/charizard 19 cm.webp"],
+        tamanhos: {"19 cm": 160},
+        personalizavel: false
+      },
+      {
+        id: 17, categoria: "Miniaturas", nome: "Charmander Comemorando", preco: 60.00,
+        descricao: "Charmander fofo com os braços levantados.", fotos: ["Imagens/charmander comemorando.webp"]
+        personalizavel: false
+      },
+      {
+        id: 18, categoria: "Miniaturas", nome: "Charmander Surfando", preco: 120.00,
+        descricao: "Charmander surfando.", fotos: ["Imagens/charmander surfando.webp"]
+        personalizavel: false
+      },
+      {
+        id: 19, categoria: "Chaveiros", nome: "Chaveiro Batman", preco: 15.00,
+        descricao: "Chaveiro do Batman.", fotos: ["Imagens/chaveiro batman.webp"]
+        personalizavel: false
+      },
+      {
+        id: 20, categoria: "Chaveiros", nome: "Chaveiro Charmander", preco: 15.00,
+        descricao: "Chaveiro do Charmander.", fotos: ["Imagens/chaveiro charmander.webp"]
+        personalizavel: false
+      },
+      {
+        id: 21, categoria: "Chaveiros", nome: "Chaveiro Deadpool", preco: 20.00,
+        descricao: "Chaveiro do Deadpool.", fotos: ["Imagens/chaveiro deadpool.webp"]
+        personalizavel: false
+      },
+      {
+        id: 22, categoria: "Chaveiros", nome: "Chaveiro Homem-Aranha", preco: 20.00,
+        descricao: "Chaveiro do Homem-Aranha.", fotos: ["Imagens/chaveiro homem aranha.webp"]
+        personalizavel: false
+      },
+      {
+        id: 23, categoria: "Geek", nome: "Crânio Capitão América", preco: 15.00,
+        descricao: "Crânio inspirado no Capitão América.", fotos: ["Imagens/cranio capitão america.webp"]
+        personalizavel: false
+      },
+      {
+        id: 24, categoria: "Geek", nome: "Doomsday Premium", preco: 180.00,
+        descricao: "Peça premium do Doomsday.", fotos: ["Imagens/dommsday.webp"]
+        personalizavel: false
+      },
+      {
+        id: 25, categoria: "Miniaturas", nome: "Eevee Sentada", preco: 80.00,
+        descricao: "Eevee em posição sentada.", fotos: ["Imagens/eeve sentada.webp"]
+        personalizavel: false
+      },
+      {
+        id: 26, categoria: "Miniaturas", nome: "Goku Amarelo", preco: 180.00,
+        descricao: "Miniatura do Goku em transformação.", fotos: ["Imagens/goku amarelo.webp"]
+        personalizavel: false
+      },
+      {
+        id: 27, categoria: "Miniaturas", nome: "Goku Cabelo Branco", preco: 180.00,
+        descricao: "Miniatura do Goku com cabelo branco.", fotos: ["Imagens/goku cabelo branco.webp"]
+        personalizavel: false
+      },
+      {
+        id: 28, categoria: "Miniaturas", nome: "Goku Jovem", preco: 60.00,
+        descricao: "Miniatura do Goku jovem.", fotos: ["Imagens/goku jovem.webp"]
+        personalizavel: false
+      },
+      {
+        id: 29, categoria: "Geek", nome: "Homem de Ferro", preco: 120.00,
+        descricao: "Miniatura do Homem de Ferro.", fotos: ["Imagens/homem de ferro.webp"]
+        personalizavel: false
+      },
+      {
+        id: 30, categoria: "Geek", nome: "Hulk com Base", preco: 180.00,
+        descricao: "Miniatura do Hulk com base.", fotos: ["Imagens/hulk base.png"]
+        personalizavel: false
+      },
+      {
+        id: 31, categoria: "Geek", nome: "Hulk Vermelho", preco: 200.00,
+        descricao: "Miniatura do Hulk Vermelho.", fotos: ["Imagens/hulk vermelho.webp"]
+        personalizavel: false
+      },
+      {
+        id: 32, categoria: "Miniaturas", nome: "Luffy Branco", preco: 190.00,
+        descricao: "Miniatura do Luffy em versão branca.", fotos: ["Imagens/luffy branco.webp"]
+        personalizavel: false
+      },
+      {
+        id: 33, categoria: "Miniaturas", nome: "Luffy", preco: 160.00,
+        descricao: "Miniatura do Luffy.", fotos: ["Imagens/lufy.webp"]
+        personalizavel: false
+      },
+      {
+        id: 34, categoria: "Miniaturas", nome: "Luigi", preco: 160.00,
+        descricao: "Miniatura do Luigi.", fotos: ["Imagens/luigi.png"]
+        personalizavel: false
+      },
+      {
+        id: 35, categoria: "Miniaturas", nome: "Mario", preco: 120.00,
+        descricao: "Miniatura do Mario.", fotos: ["Imagens/mario.webp"]
+        personalizavel: false
+      },
+      {
+        id: 36, categoria: "Miniaturas", nome: "Mini Bulbassauro", preco: 120.00,
+        descricao: "Miniatura do Bulbassauro em tamanho normal.", fotos: ["Imagens/mini bulbassauro.webp"],
+        tamanhos: {"Tamanho normal": 120},
+        personalizavel: false
+      },
+      {
+        id: 37, categoria: "Geek", nome: "Ocarina de Zelda com Base", preco: 140.00,
+        descricao: "Ocarina inspirada em Zelda com base.", fotos: ["Imagens/occarina zelda.webp"]
+        personalizavel: false
+      },
+      {
+        id: 38, categoria: "Decoração", nome: "Porta-Objetos Bob Esponja", preco: 60.00,
+        descricao: "Porta-objetos do Bob Esponja.", fotos: ["Imagens/porta bob esponja.webp"]
+        personalizavel: false
+      },
+      {
+        id: 39, categoria: "Geek", nome: "Spider Noir", preco: 60.00,
+        descricao: "Miniatura do Spider Noir.", fotos: ["Imagens/spider noir.png"]
+        personalizavel: false
+      },
+      {
+        id: 40, categoria: "Geek", nome: "Suporte de Controle Mario", preco: 100.00,
+        descricao: "Suporte de controle inspirado no Mario.", fotos: ["Imagens/suporte de controle mario.webp"]
+        personalizavel: false
+      },
+      {
+        id: 41, categoria: "Geek", nome: "Suporte de Fone Homem-Aranha", preco: 100.00,
+        descricao: "Suporte de fone inspirado no Homem-Aranha.", fotos: ["Imagens/suporte de fone homem aranha.png"]
+        personalizavel: false
+      },
+      {
+        id: 42, categoria: "Geek", nome: "Suporte Yoshi", preco: 40.00,
+        descricao: "Suporte inspirado no Yoshi.", fotos: ["Imagens/suporte yoshi.webp"]
+        personalizavel: false
+      },
+      {
+        id: 43, categoria: "Geek", nome: "Wolverine Matando Deadpool", preco: 160.00,
+        descricao: "Cena de ação do Wolverine contra o Deadpool.", fotos: ["Imagens/volverine matando deadpool.webp"]
         personalizavel: false
       }
     ];
