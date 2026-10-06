@@ -838,6 +838,60 @@
     }
 
     /* ============================================================
+       AMPLIAR FOTO DO PRODUTO
+       ============================================================ */
+
+    .image-zoom {
+      cursor: zoom-in;
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.88);
+      cursor: zoom-out;
+    }
+
+    .image-modal.open {
+      display: flex;
+    }
+
+    .image-modal img {
+      max-width: 95vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 15px 60px rgba(0,0,0,.65);
+    }
+
+    .image-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 22px;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      background: rgba(0,0,0,.55);
+      color: white;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .image-modal-close:hover {
+      background: rgba(201,164,92,.25);
+      border-color: var(--dourado);
+    }
+
+    /* ============================================================
        RESPONSIVO
        ============================================================ */
 
@@ -1084,6 +1138,14 @@
       </button>
     </div>
   </aside>
+
+  <!-- ============================================================
+       VISUALIZADOR DE FOTOS
+       ============================================================ -->
+  <div class="image-modal" id="imageModal" onclick="fecharImagem(event)">
+    <button class="image-modal-close" type="button" aria-label="Fechar imagem">×</button>
+    <img id="imageModalImg" src="" alt="Imagem ampliada">
+  </div>
 
   <script>
     /* ============================================================
@@ -1350,7 +1412,9 @@
     const cartBackdrop = document.getElementById("cartBackdrop");
     const cartPanel = document.getElementById("cartPanel");
 
-    let carrinho = [];
+    // Recupera o carrinho salvo no navegador.
+    // Assim, os produtos continuam no carrinho mesmo depois de apertar F5.
+    let carrinho = JSON.parse(localStorage.getItem("magikInkCarrinho") || "[]");
     let cartAlreadyOpened = false;
     let currentCategory = "Todos";
     const indicesFotos = {};
@@ -1387,8 +1451,10 @@
         card.innerHTML = `
           <div class="product-images">
             <img id="img-${produto.id}"
+                 class="image-zoom"
                  src="${produto.fotos[indicesFotos[produto.id]]}"
                  alt="${produto.nome}"
+                 onclick="ampliarImagem('${produto.fotos[indicesFotos[produto.id]]}', '${produto.nome.replace(/'/g, "\\'")}')"
                  onerror="this.src='https://placehold.co/900x900/111111/C9A45C?text=ADICIONE+A+IMAGEM'">
 
             ${produto.fotos.length > 1 ? `
@@ -1442,6 +1508,41 @@
       });
     }
 
+    function ampliarImagem(src, nome) {
+      const modal = document.getElementById("imageModal");
+      const imagem = document.getElementById("imageModalImg");
+
+      imagem.src = src;
+      imagem.alt = nome || "Imagem ampliada";
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function fecharImagem(event) {
+      // Fecha clicando no fundo ou no X, mas não ao clicar na própria imagem.
+      if (
+        event &&
+        event.target &&
+        event.target.id !== "imageModal" &&
+        !event.target.classList.contains("image-modal-close")
+      ) {
+        return;
+      }
+
+      const modal = document.getElementById("imageModal");
+      const imagem = document.getElementById("imageModalImg");
+
+      modal.classList.remove("open");
+      imagem.src = "";
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        fecharImagem({ target: document.getElementById("imageModal") });
+      }
+    });
+
     function atualizarPrecoProduto(id) {
       const select = document.getElementById(`size-${id}`);
       const price = document.getElementById(`price-${id}`);
@@ -1483,6 +1584,7 @@
         precoSelecionado: preco
       });
 
+      salvarCarrinho();
       atualizarCarrinho();
 
       const botaoCarrinho = document.getElementById("openCart");
@@ -1527,7 +1629,12 @@
 
     function removerCarrinho(index) {
       carrinho.splice(index, 1);
+      salvarCarrinho();
       atualizarCarrinho();
+    }
+
+    function salvarCarrinho() {
+      localStorage.setItem("magikInkCarrinho", JSON.stringify(carrinho));
     }
 
     function atualizarCarrinho() {
@@ -1695,6 +1802,7 @@
     atualizarHero();
 
     renderProducts();
+    atualizarCarrinho();
   </script>
 </body>
 </html>
