@@ -1511,9 +1511,27 @@
         ? produtos
         : produtos.filter(p => p.categoria === currentCategory);
 
-      productsGrid.innerHTML = "";
+      const ordem = document.getElementById("ordenarProdutos")?.value || "padrao";
 
-      filtrados.forEach(produto => {
+if (ordem === "menor") {
+  filtrados.sort((a, b) => a.preco - b.preco);
+}
+
+if (ordem === "maior") {
+  filtrados.sort((a, b) => b.preco - a.preco);
+}
+
+if (ordem === "az") {
+  filtrados.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+}
+
+if (ordem === "za") {
+  filtrados.sort((a, b) => b.nome.localeCompare(a.nome, "pt-BR"));
+}
+
+productsGrid.innerHTML = "";
+
+filtrados.forEach(produto => {
         if (indicesFotos[produto.id] === undefined) {
           indicesFotos[produto.id] = 0;
         }
