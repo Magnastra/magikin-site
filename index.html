@@ -990,6 +990,17 @@
 .aviso-sp{
   font-size:12px;color:#999;margin-top:8px;line-height:1.4
 }
+.envio-aviso{
+  width:100%;
+  margin:0 0 22px;
+  padding:10px 14px;
+  border:1px solid rgba(201,164,92,.16);
+  border-radius:10px;
+  background:rgba(201,164,92,.045);
+  color:#aaa;
+  font-size:13px;
+  text-align:center;
+}
 @media(max-width:600px){
   .loja-controles{display:grid;grid-template-columns:1fr}
   .loja-controles input,.loja-controles select{width:100%;box-sizing:border-box}
@@ -1037,13 +1048,13 @@
     <p>Personalizados</p>
 
     <a href="#inicio">Início</a>
-    <a href="#produtos">Todos os produtos</a>
-    <a href="#miniaturas">Miniaturas</a>
-    <a href="#geek">Geek</a>
-    <a href="#canecas">Canecas</a>
-    <a href="#chaveiros">Chaveiros</a>
-    <a href="#personalizados">Personalizados</a>
-    <a href="#decoracao">Decoração</a>
+    <a href="#produtos" data-category="Todos">Todos os produtos</a>
+    <a href="#produtos" data-category="Miniaturas">Miniaturas</a>
+    <a href="#produtos" data-category="Geek">Geek</a>
+    <a href="#produtos" data-category="Canecas">Canecas</a>
+    <a href="#produtos" data-category="Chaveiros">Chaveiros</a>
+    <a href="#produtos" data-category="Personalizados">Personalizados</a>
+    <a href="#produtos" data-category="Decoração">Decoração</a>
     <a href="#personalizacao">Personalize seu produto</a>
     <a href="#contato">Contato</a>
   </aside>
@@ -1097,8 +1108,8 @@
            1. Vá até a parte "LISTA DE PRODUTOS" no JavaScript.
            2. Copie um produto existente.
            3. Altere id, categoria, nome, preço, descrição e fotos.
-           4. Coloque as fotos dentro da pasta "imagens".
-           5. Use o caminho: "imagens/nome-da-foto.jpg"
+           4. Coloque as fotos dentro da pasta "Imagens".
+           5. Use o caminho: "Imagens/nome-da-foto.jpg"
        6. A logo principal deve ficar na mesma pasta do index.html com o nome "logo.png".
 
            EXEMPLO:
@@ -1109,8 +1120,8 @@
              preco: 49.90,
              descricao: "Descrição curta.",
              fotos: [
-               "imagens/produto-1.jpg",
-               "imagens/produto-2.jpg"
+               "Imagens/produto-1.jpg",
+               "Imagens/produto-2.jpg"
              ],
              personalizavel: false
            }
@@ -1119,6 +1130,18 @@
            ============================================================ -->
 
       
+<div class="envio-aviso">📦 Envio em até 7 dias</div>
+
+<div class="cep-box">
+  <h4>📍 Verifique se entregamos no seu estado</h4>
+  <div class="aviso-sp">Digite apenas o seu CEP. Não precisamos do seu endereço agora.</div>
+  <div class="cep-linha">
+    <input id="cepEntrega" type="text" inputmode="numeric" maxlength="9" placeholder="Digite seu CEP (00000-000)">
+    <button class="btn-loja" type="button" onclick="validarCEP()">Verificar CEP</button>
+  </div>
+  <div id="cepStatus" class="cep-status"></div>
+</div>
+
 <div class="loja-controles" id="lojaControles">
   <input id="buscaProduto" type="search" placeholder="🔎 Procurar produto..." aria-label="Procurar produto">
   <select id="ordenarProdutos" aria-label="Ordenar produtos">
@@ -1137,10 +1160,10 @@
            ============================================================ -->
       <section class="custom-box" id="personalizacao">
         <div class="eyebrow">Feito para você</div>
-        <h2>Personalize seu boneco 3D</h2>
+        <h2>Crie seu próprio boneco</h2>
         <p>
-          Não achou o personagem que procura? Escreva sua ideia, escolha o tamanho
-          e envie para a Magik Ink. Nós verificamos a disponibilidade.
+          Você imagina, a gente transforma em 3D. Envie suas fotos, conte sua ideia,
+          escolha o tamanho e fale com a Magik Ink pelo WhatsApp.
         </p>
 
         <div class="custom-request">
@@ -1158,7 +1181,7 @@
           </select>
 
           <button class="custom-send" id="customSend">
-            Consultar disponibilidade pelo WhatsApp
+            Quero criar meu boneco pelo WhatsApp
           </button>
         </div>
       </section>
@@ -1173,7 +1196,6 @@
     <p>Personalizados</p>
     <p>Da sua ideia à realidade.</p>
     <p><a href="https://instagram.com/magic_ink_personalizados" target="_blank">@magic_ink_personalizados</a></p>
-  <p class="aviso-sp">📦 Entregas atualmente disponíveis somente para endereços no estado de São Paulo.</p>
 </footer>
 
   <!-- ============================================================
@@ -1245,7 +1267,7 @@
        ============================================================
 
        ADICIONE/EDITE PRODUTOS AQUI.
-       As fotos devem estar dentro da pasta "imagens".
+       As fotos devem estar dentro da pasta "Imagens".
 
        Se o produto for personalizável, coloque:
        personalizavel: true
@@ -1833,7 +1855,23 @@ filtrados.forEach(produto => {
     document.getElementById("sendOrder").addEventListener("click", enviarPedido);
 
     document.querySelectorAll(".side-menu a").forEach(link => {
-      link.addEventListener("click", fecharMenu);
+      link.addEventListener("click", () => {
+        const categoria = link.dataset.category;
+
+        if (categoria) {
+          currentCategory = categoria;
+          document.querySelectorAll(".category-btn").forEach(b => {
+            b.classList.toggle("active", b.dataset.category === categoria);
+          });
+          renderProducts();
+          document.getElementById("produtos")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+
+        fecharMenu();
+      });
     });
 
     document.querySelectorAll(".category-btn").forEach(button => {
@@ -1899,23 +1937,7 @@ filtrados.forEach(produto => {
     atualizarCarrinho();
   </script>
 
-<div class="cep-box">
-  <h4>📍 Entrega em São Paulo</h4>
-  <div class="aviso-sp">Atendemos atualmente somente endereços dentro do estado de São Paulo.</div>
-  <div class="cep-linha">
-    <input id="cepEntrega" type="text" inputmode="numeric" maxlength="9" placeholder="Digite seu CEP (00000-000)">
-    <button class="btn-loja" type="button" onclick="validarCEP()">Verificar CEP</button>
-  </div>
-  <div id="cepStatus" class="cep-status"></div>
-  <div id="enderecoBox" class="endereco-box">
-    <input id="enderecoEntrega" type="text" placeholder="Rua / Avenida">
-    <input id="numeroEntrega" type="text" placeholder="Número">
-    <input id="complementoEntrega" type="text" placeholder="Complemento (opcional)">
-    <input id="bairroEntrega" type="text" placeholder="Bairro">
-    <input id="cidadeEntrega" type="text" placeholder="Cidade">
-    <input id="estadoEntrega" type="text" placeholder="Estado" value="SP" readonly>
-  </div>
-</div>
+
 
 
 <script>
@@ -2035,35 +2057,38 @@ filtrados.forEach(produto => {
   };
   window.fecharDetalhesProduto=function(){byId("modalDetalhesMagik")?.classList.remove("aberto")};
 
-  // CEP: SP only. CEP ranges for the state are validated by the ViaCEP UF response.
+  // CEP: verifica apenas o estado. Não solicita endereço.
   window.validarCEP=async function(){
-    const input=byId("cepEntrega"), status=byId("cepStatus"), box=byId("enderecoBox");
+    const input=byId("cepEntrega"), status=byId("cepStatus");
     if(!input||!status) return;
     const cep=input.value.replace(/\D/g,"");
+
     if(cep.length!==8){
-      status.className="cep-status erro"; status.textContent="Digite um CEP válido com 8 números.";
-      box?.classList.remove("aberto"); return;
+      status.className="cep-status erro";
+      status.textContent="Digite um CEP válido com 8 números.";
+      return;
     }
-    status.className="cep-status"; status.textContent="Consultando CEP…";
+
+    status.className="cep-status";
+    status.textContent="Consultando CEP…";
+
     try{
       const r=await fetch("https://viacep.com.br/ws/"+cep+"/json/");
       const d=await r.json();
-      if(d.erro){throw new Error("CEP não encontrado");}
+
+      if(d.erro) throw new Error("CEP não encontrado");
+
       if(d.uf!=="SP"){
         status.className="cep-status erro";
-        status.textContent="No momento, entregamos somente no estado de São Paulo.";
-        box?.classList.remove("aberto"); return;
+        status.textContent="❌ Ainda não entregamos neste estado.";
+        return;
       }
+
       status.className="cep-status ok";
-      status.textContent="CEP de São Paulo confirmado. Complete o endereço.";
-      if(byId("enderecoEntrega")) byId("enderecoEntrega").value=d.logradouro||"";
-      if(byId("bairroEntrega")) byId("bairroEntrega").value=d.bairro||"";
-      if(byId("cidadeEntrega")) byId("cidadeEntrega").value=d.localidade||"";
-      if(byId("estadoEntrega")) byId("estadoEntrega").value="SP";
-      box?.classList.add("aberto");
+      status.textContent="✅ Entregamos no seu estado (São Paulo).";
     }catch(e){
-      status.className="cep-status erro"; status.textContent="Não foi possível localizar esse CEP. Confira os números.";
-      box?.classList.remove("aberto");
+      status.className="cep-status erro";
+      status.textContent="Não foi possível localizar esse CEP. Confira os números.";
     }
   };
 
